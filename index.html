@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script src="./js/tetris.js"></script>
+    <link rel="stylesheet" href="css/tetris.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script>
+
+        $(function () {
+            init();
+            let arri = 0;
+            let arrj = 1;
+            let downArr;
+            /*  transformation(); */
+            $('#change').click(function () {
+                //shapeLotate()  
+                let clearArr = lotateArray();
+                //console.log(clearArr);
+                for (let i = 0; i < 4; i++) {
+                    clearLotate(clearArr[i]);
+                }
+
+                transformation();
+
+                //lotateArray();
+                //console.log(shapeLotate());
+                //console.log(lotateArray()); 
+                arri = 0;
+                arrj = 1;
+                downArr = transformation();
+              
+               
+            })
+            //console.log(arri, arrj);
+
+            // 旋转
+            $('#rotate').click(function () {
+                //console.log(flag);
+                let arr1 = lotateArray(arri);
+
+                arri++;
+                if (arri == 4) {
+                    arri = 0;
+                }
+                let arr2 = lotateArray(arrj);
+                downArr = arr2;
+                arrj++;
+                if (arrj == 4) {
+                    arrj = 0;
+                }
+                shapeLotate(arr1, arr2);
+              
+            })
+
+            //下移
+            let downI = 0
+            $('#down').click(function () {
+                
+            })
+
+        })
+    </script>
+
+</head>
+
+<body>
+
+    <button id="up">上动</button>
+    <button id="down">下动</button>
+    <button id="right">右动</button>
+    <button id="left">左动</button>
+    <button id="change">变换</button>
+    <button id="rotate">旋转</button>
+    <div class="board">
+    </div>
+</body>
+
+</html>
