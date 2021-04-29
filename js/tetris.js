@@ -18,188 +18,132 @@ function drawSquare(x, y, color) {
     rowDivs.css('background', color);
 
 }
+
+//抹去上一个图形
+function allEraseShape(x, y, shape) {
+    console.log(shape);
+    let row;
+    for (let i = 0; i < shape.length; i++) {
+        console.log(i);
+        row = shape[i];
+        console.log(row);
+        for (let j = 0; j < row.length; j++) {
+            let binaryStr = parseInt(row[i], 16).toString(2);
+            if (binaryStr.length < 4) {
+                binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+            }
+            for (let k = 0; k < binaryStr.length; k++){
+                if (binaryStr[j] == 1){
+                    drawSquare(x + j, y + k, 'orange');
+                }
+            }
+        }
+    }
+    /*  for (let i = 0; i < 4; i++) {
+         //console.log(row);
+  
+          let binaryStr = parseInt(row[i], 16).toString(2);
+          //console.log(binaryStr);
+          if (binaryStr.length < 4) {
+              binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+          }
+          //console.log(binaryStr);
+          for (let j = 0; j < binaryStr.length; j++) {
+              if (binaryStr[j] == 1) {
+                  drawSquare(x + i, y + j, 'orange');
+              }
+          }
+      }   */
+}
+
+function eraseShape(x, y, shape){
+    let row = shape;
+
+    for (let i = 0; i < 4; i++) {
+        //console.log(row);
+        let binaryStr = parseInt(row[i], 16).toString(2);
+        //console.log(binaryStr);
+        if (binaryStr.length < 4) {
+            binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+        }
+        //console.log(binaryStr);
+        for (let j = 0; j < binaryStr.length; j++) {
+            if (binaryStr[j] == 1) {
+                drawSquare(x + i, y + j, 'orange');
+            }
+        }
+    }
+}
+
 // 画一个形状
 function drawShape(x, y, shape) {
+    //console.log(shape);
+    let row = shape;
 
+    for (let i = 0; i < 4; i++) {
+        //console.log(row);
+        let binaryStr = parseInt(row[i], 16).toString(2);
+        //console.log(binaryStr);
+        if (binaryStr.length < 4) {
+            binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+        }
+        //console.log(binaryStr);
+        for (let j = 0; j < binaryStr.length; j++) {
+            if (binaryStr[j] == 1) {
+                drawSquare(x + i, y + j, 'red');
+            }
+        }
+    }
 }
+
+function clearLotate(x, y, shape) {
+
+    console.log(shape);
+    for (let i = 0; i < 4; i++) {
+        //console.log(row);
+        let row = shape;
+        let binaryStr = parseInt(row[i], 16).toString(2);
+        //console.log(binaryStr);
+        if (binaryStr.length < 4) {
+            binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+        }
+        //console.log(binaryStr);
+        for (let j = 0; j < binaryStr.length; j++) {
+            if (binaryStr[j] == 1) {
+                drawSquare(x + i, y + j, 'orange');
+            }
+        }
+    }
+}
+
+
 // 变形
-let shapeNum = 0;
-function transformation() {
-    let graph = shapes[shapeNum];
-    for (let i = 0; i < shapes[shapeNum].length; i++) {
-        let row = graph[i]
-        for (let j = 0; j < graph[i].length; j++) {
-            let item = row[j]
-            if (item >= 1) {
-                drawSquare(i, j, 'orange');
-            }
-        }
-    }
-
-    shapeNum++;
-    if (shapeNum == 7) {
-        shapeNum = 0;
-
-    }
-    //console.log(shapeNum);
-    graph = shapes[shapeNum];
-    for (let i = 0; i < shapes[shapeNum].length; i++) {
-        let row = graph[i]
-        for (let j = 0; j < graph[i].length; j++) {
-            let item = row[j]
-            if (item >= 1) {
-                drawSquare(i, j, 'red');
-            }
-        }
-    }
-    return graph;
-}
-
-//旋转
-function shapeLotate(orangeShape, redShape) {
-    //console.log(lotateNum);,
-
-    let orangeGraph = orangeShape;
-    //console.log(orangeShape)
-    for (let i = 0; i < orangeGraph.length; i++) {
-        let row = orangeGraph[i]
-        for (let j = 0; j < orangeGraph[i].length; j++) {
-            let item = row[j]
-            if (item >= 1) {
-                drawSquare(i, j, 'orange');
-            }
-        }
-    }
-    //lotateNum++;
-    let redGraph = redShape;
-    for (let i = 0; i < redGraph.length; i++) {
-        let row = redGraph[i]
-        for (let j = 0; j < redGraph[i].length; j++) {
-            let item = row[j]
-            if (item >= 1) {
-                drawSquare(i, j, 'red');
-            }
-        }
-    }
-
-
-}
 
 
 
-function clearLotate(orangeShape) {
-    let orangeGraph = orangeShape;
-    //console.log(orangeShape)
-    for (let i = 0; i < orangeGraph.length; i++) {
-        let row = orangeGraph[i]
-        for (let j = 0; j < orangeGraph[i].length; j++) {
-            let item = row[j]
-            if (item >= 1) {
-                drawSquare(i, j, 'orange');
-            }
-        }
-    }
-}
 
 
 
-function lotateArray(num) {
-    let lotateNum = shapeNum;
-    if (lotateNum == 7) {
-        lotateNum = 0
-    }
-    //console.log(lotateNum);
-    let allArray = new Array();
-    let arr = shapes[lotateNum];
-    const n = arr.length;
-    for (let k = 0; k < 4; k++) {
-        allArray.push(arr);
-        const newArr = new Array(n).fill(0).map(() => new Array(n).fill(0));
-        for (let i = 0; i < n; i++) {
 
-            for (let j = 0; j < n; j++) {
-                newArr[j][n - i - 1] = arr[i][j];
-            }
 
-        }
-
-        arr = newArr;
-        //allArray = new Array(4).fill().map(()=>arr);
-
-        //console.log(newArr);
-
-    }
-    //console.log(allArray);
-    if (arguments.length > 0) {
-        return allArray[num];
-    } else {
-        return allArray;
-    }
-
-}
-
-function down(arr1,arr2) {
-   
-    
-
-}
 
 // 所有形状
 const shapes = [
     /* O I L Z S J T */
     // shapeO
-    [
-        [1, 1, 0, 0],
-        [1, 1, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-
-    ],
+    ["CC00", "CC00", "0000", "0000"],
     //shapeI
-    [
-        [1, 0, 0, 0],
-        [1, 0, 0, 0],
-        [1, 0, 0, 0],
-        [1, 0, 0, 0]
-    ],
+    ["8888", "F000", "8888", "F000"],
     //spapeL
-    [
-        [1, 0, 0, 0],
-        [1, 0, 0, 0],
-        [1, 1, 0, 0],
-        [0, 0, 0, 0]
-
-    ],
+    ["88C0", "2E00", "C440", "E800"],
     //shapeZ
-    [
-        [1, 1, 0, 0],
-        [0, 1, 1, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-
-    ],
+    ["C600", "4C80", "C600", "4C80"],
     //shapeS
-    [
-        [0, 1, 1, 0],
-        [1, 1, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ],
+    ["6C00", "8C40", "6C00", "8C40"],
     //shapeT
-    [
-        [1, 1, 1, 0],
-        [0, 1, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ],
+    ["E400", "8C80", "4E00", "4C40"],
     //shapeJ
-    [
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [1, 1, 0, 0],
-        [0, 0, 0, 0]
-
-    ]
+    ["44C0", "E200", "C880", "8E00"]
 ]
 
 
