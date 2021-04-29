@@ -14,55 +14,45 @@
 
         $(function () {
             init();
-            let arri = 0;
-            let arrj = 1;
-            let downArr;
-            /*  transformation(); */
+            let changeI = 0;
+            let rotateI = 0;
             $('#change').click(function () {
-                //shapeLotate()  
-                let clearArr = lotateArray();
-                //console.log(clearArr);
-                for (let i = 0; i < 4; i++) {
-                    clearLotate(clearArr[i]);
+
+                allEraseShape(0, 0, shapes[changeI]);
+                changeI++;
+                if (changeI == 7) {
+                    changeI = 0;
+
                 }
+                clearLotate(0, 0, shapes[changeI])
+                drawShape(0, 0, shapes[changeI][0]);
 
-                transformation();
 
-                //lotateArray();
-                //console.log(shapeLotate());
-                //console.log(lotateArray()); 
-                arri = 0;
-                arrj = 1;
-                downArr = transformation();
-              
-               
+
+                rotateI = 0;
             })
             //console.log(arri, arrj);
 
             // 旋转
+
             $('#rotate').click(function () {
-                //console.log(flag);
-                let arr1 = lotateArray(arri);
-
-                arri++;
-                if (arri == 4) {
-                    arri = 0;
+                eraseShape(0, 0, shapes[changeI][rotateI]);
+                rotateI++;
+                if (rotateI == 4) {
+                    rotateI = 0;
                 }
-                let arr2 = lotateArray(arrj);
-                downArr = arr2;
-                arrj++;
-                if (arrj == 4) {
-                    arrj = 0;
-                }
-                shapeLotate(arr1, arr2);
-              
+                // console.log(rotateI);
+                drawShape(0, 0, shapes[changeI][rotateI]);
             })
 
-            //下移
-            let downI = 0
-            $('#down').click(function () {
-                
+            
+
+
+            $('#test').click(function () {
+                clearLotate(0, 0, shapes[changeI])
             })
+
+
 
         })
     </script>
@@ -77,6 +67,7 @@
     <button id="left">左动</button>
     <button id="change">变换</button>
     <button id="rotate">旋转</button>
+    <button id="test">test</button>
     <div class="board">
     </div>
 </body>
