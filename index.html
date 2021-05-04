@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./js/jquery-3.6.0.js"></script>
+    <script src="./js/init.js"></script>
     <script src="./js/tetris.js"></script>
     <link rel="stylesheet" href="css/tetris.css">
     <link rel="stylesheet" href="css/common.css">
@@ -14,42 +15,65 @@
 
         $(function () {
             init();
-            let changeI = 0;
-            let rotateI = 0;
+            drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
             $('#change').click(function () {
-
-                allEraseShape(0, 0, shapes[changeI]);
-                changeI++;
-                if (changeI == 7) {
-                    changeI = 0;
-
-                }
-                clearLotate(0, 0, shapes[changeI])
-                drawShape(0, 0, shapes[changeI][0]);
-
-
-
-                rotateI = 0;
+                eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                let x = (currentShape.x + 1) % shapes.length;
+                currentShape.x = x;
+                currentShape.y = 0;
+                currentCol = 0;
+                currentRow = 0;
+                drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
             })
-            //console.log(arri, arrj);
 
-            // 旋转
+            //下移
+            $('#down').click(function () {
+                let shape = shapes[currentShape.x][currentShape.y];
+                if (validate(currentRow + 1, currentCol, shape)) {
+                    eraseShape(currentRow, currentCol, shape);
+                    currentRow++
+                    drawShape(currentRow, currentCol, shape);
+                } else {
+                    setBoard(currentRow, currentCol, shape);
+                    let x = (currentShape.x + 1) % shapes.length;
+                    currentShape.x = x;
+                    currentShape.y = 0;
+                    currentCol = 0;
+                    currentRow = 0;
+                    drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                }
+            })
 
+            //右移
+            $('#right').click(function () {
+                let shape = shapes[currentShape.x][currentShape.y];
+                if (validate(currentRow, currentCol + 1, shape)) {
+                    eraseShape(currentRow, currentCol, shape);
+                    currentCol++
+                    drawShape(currentRow, currentCol, shape);
+                }
+            })
+
+            //左移
+            $('#left').click(function () {
+                let shape = shapes[currentShape.x][currentShape.y];
+                if (validate(currentRow, currentCol - 1, shape)) {
+                    eraseShape(currentRow, currentCol, shape);
+                    currentCol--;
+                    drawShape(currentRow, currentCol, shape);
+                }
+
+            })
+
+            // 旋转  
             $('#rotate').click(function () {
-                eraseShape(0, 0, shapes[changeI][rotateI]);
-                rotateI++;
-                if (rotateI == 4) {
-                    rotateI = 0;
+                let y = (currentShape.y + 1) % 4;
+                let nextShape = shapes[currentShape.x][y];
+                if (validate(currentRow, currentCol, nextShape)) {
+                    eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                    currentShape.y = y;
+                    drawShape(currentRow, currentCol, nextShape);
                 }
-                // console.log(rotateI);
-                drawShape(0, 0, shapes[changeI][rotateI]);
-            })
-
-            
-
-
-            $('#test').click(function () {
-                clearLotate(0, 0, shapes[changeI])
             })
 
 
@@ -60,7 +84,6 @@
 </head>
 
 <body>
-
     <button id="up">上动</button>
     <button id="down">下动</button>
     <button id="right">右动</button>
