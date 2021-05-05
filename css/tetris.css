@@ -4,7 +4,7 @@
     width: 218px;
     height: 409px;
     background-color: #131114;
-    margin: 0 auto;
+    margin: 100px auto;
 }
 /* 一行高度 */
 .rowDiv {
@@ -17,20 +17,45 @@
     display: inline-block;
     border: 1px solid #fff;
 }
-/* 按钮框 */
-.btn {
 
-    position: absolute;
-    top: 320px;
-    left: 800px;
+/* show框 */
+.show {
+    position: relative;
+    width: 150px;
+    height: 250px;
+    top: -500px;
+    left: 770px;
+    border: 1px solid black;
 }
+
+/* hint：下一个图形 */
+.hint {
+    position: absolute;
+    left: 15px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
 /* 下一个图形 */
 .nextShape {
     position: absolute;
     width: 89px;
     height: 87px;
     border: 1px solid black;
-    top: 220px;
-    left: 800px;
+    top: 50px;
+    left: 20px;
     background-color: #131114;
+}
+
+/* takeTime记录用时 */
+
+.takeTime {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+    height: 20px;
+    width: 100px;
+    font-size: 15px;
+    line-height: 20px;
 }

@@ -18,74 +18,18 @@
             nextShape();
             drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
             drawNextShape(shapes[currentShape.x][currentShape.y]);
-           /*  $('#change').click(function () {
-                eraseNextShape(shapes[nextshape][0]);
-                eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
-                let x = (currentShape.x + 1) % shapes.length;
-                currentShape.x = x;
-                currentShape.y = 0;
-                currentCol = 0;
-                currentRow = 0;
-                nextshape = (x + 1) % shapes.length;
-                drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
-                drawNextShape(shapes[nextshape][0]);
-            })
-
-            //下移
-            $('#down').click(function () {
-                let shape = shapes[currentShape.x][currentShape.y];
-                if (validate(currentRow + 1, currentCol, shape)) {
-                    eraseShape(currentRow, currentCol, shape);
-                    currentRow++
-                    drawShape(currentRow, currentCol, shape);
-                } else {
-                    setBoard(currentRow, currentCol, shape);
-                    eraseNextShape(shapes[nextshape][0]);
-                    let x = (currentShape.x + 1) % shapes.length;
-                    currentShape.x = x;
-                    currentShape.y = 0;
-                    currentCol = 0;
-                    currentRow = 0;
-                    nextshape = (x + 1) % shapes.length;
-                    drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
-                    drawNextShape(shapes[nextshape][0]);
-                }
-            })
-
-            //右移
-            $('#right').click(function () {
-                let shape = shapes[currentShape.x][currentShape.y];
-                if (validate(currentRow, currentCol + 1, shape)) {
-                    eraseShape(currentRow, currentCol, shape);
-                    currentCol++
-                    drawShape(currentRow, currentCol, shape);
-                }
-            })
-
-            //左移
-            $('#left').click(function () {
-                let shape = shapes[currentShape.x][currentShape.y];
-                if (validate(currentRow, currentCol - 1, shape)) {
-                    eraseShape(currentRow, currentCol, shape);
-                    currentCol--;
-                    drawShape(currentRow, currentCol, shape);
-                }
-
-            })
-
-            // 旋转  
-            $('#rotate').click(function () {
-                let y = (currentShape.y + 1) % 4;
-                let nextShape = shapes[currentShape.x][y];
-                if (validate(currentRow, currentCol, nextShape)) {
-
-                    eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
-                    currentShape.y = y;
-                    drawShape(currentRow, currentCol, nextShape);
-
-                }
-            }) */
-
+            /*  $('#change').click(function () {
+                 eraseNextShape(shapes[nextshape][0]);
+                 eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                 let x = (currentShape.x + 1) % shapes.length;
+                 currentShape.x = x;
+                 currentShape.y = 0;
+                 currentCol = 0;
+                 currentRow = 0;
+                 nextshape = (x + 1) % shapes.length;
+                 drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                 drawNextShape(shapes[nextshape][0]);
+             })*/
             $(document).keydown(function (e) {
                 console.log(e.keyCode);
                 e = e.keyCode;
@@ -137,9 +81,11 @@
                         currentRow++
                         drawShape(currentRow, currentCol, shape);
                     } else {
+
                         setBoard(currentRow, currentCol, shape);
                         eraseNextShape(shapes[nextshape][0]);
-                        let x = (currentShape.x + 1) % shapes.length;
+                        //let x = (currentShape.x + 1) % shapes.length;
+                        let x = parseInt(Math.random(0, 1) * 6);
                         currentShape.x = x;
                         currentShape.y = 0;
                         currentCol = 0;
@@ -148,6 +94,7 @@
                         drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                         drawNextShape(shapes[nextshape][0]);
                     }
+
                 }
 
 
@@ -155,9 +102,58 @@
 
 
 
+
+
+
+
+
             })
+            //自动走
+            //setInterval(autoDown, 800);
+            setInterval(timer, 1000);
+            //自动向下走向下走函数
+            function autoDown() {
+                let shape = shapes[currentShape.x][currentShape.y];
+                if (validate(currentRow + 1, currentCol, shape)) {
+                    eraseShape(currentRow, currentCol, shape);
+                    currentRow++
+                    drawShape(currentRow, currentCol, shape);
+                } else {
+                    setBoard(currentRow, currentCol, shape);
+                    eraseNextShape(shapes[nextshape][0]);
+                    let x = (currentShape.x + 1) % shapes.length;
+                    currentShape.x = x;
+                    currentShape.y = 0;
+                    currentCol = 0;
+                    currentRow = 0;
+                    nextshape = (x + 1) % shapes.length;
+                    drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                    drawNextShape(shapes[nextshape][0]);
+                }
+                clearInterval();
+            }
+            //计时器
+            function timer() {
+
+                SEC++;
+                if (SEC == 59) {
+                    SEC = 0;
+                    MIN++
+                    
+                }
+                 if (SEC < 10) {
+                    $('#second').html('0' + SEC);
+                } else {
+                    $('#second').html(SEC);
+                }
+                if (MIN < 9) {
+                        $('#minite').html('0' + MIN);
+                    } else {
+                        $('#minite').html(MIN);
+                    }
 
 
+            }
 
 
 
@@ -171,17 +167,15 @@
     <!-- 棋盘 -->
     <div class="board">
     </div>
-    <!-- 按钮 -->
-    <div class="btn">
-        <button id="up">上动</button>
-        <button id="down">下动</button>
-        <button id="left">左动</button>
-        <button id="right">右动</button>
-        <button id="change">变换</button>
-        <button id="rotate">旋转</button>
+    <div class="show">
+        <p class="hint">下一个图形</p>
+        <!-- 下一个图形 -->
+        <div class="nextShape"></div>
+        <!-- 记录时间 -->
+        <p class="takeTime">用时<span id="minite"></span>分<span id="second"></span>秒</p>
+
     </div>
-    <!-- 下一个图形 -->
-    <div class="nextShape"></div>
+
 
 
 </body>

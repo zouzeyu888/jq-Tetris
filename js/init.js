@@ -8,6 +8,10 @@ const BOARD_COLUMN = 10; // 棋盘列数
 
 const BOARD_COLOR = "#131114";//模板颜色
 
+let MIN = 0; //初始化分 
+
+let SEC = 0; //初始化秒
+
 // 方块形状
 const shapes = [
     /* O I L Z S J T */
