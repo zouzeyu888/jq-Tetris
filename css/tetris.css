@@ -1,18 +1,36 @@
 /* 10 * 20  width: 20px height: 20px */
-
+/* 棋盘 */
 .board {
-    width: 200px;
-    height: 400px;
-    background-color: orange;
-    /* border: 1px solid black; */
+    width: 218px;
+    height: 409px;
+    background-color: #131114;
+    margin: 0 auto;
 }
-
+/* 一行高度 */
 .rowDiv {
     height: 20px;
 }
-
+/* 每个格子 */
 .spanTetris {
     width: 20px;
     height: 20px;
     display: inline-block;
+    border: 1px solid #fff;
+}
+/* 按钮框 */
+.btn {
+
+    position: absolute;
+    top: 320px;
+    left: 800px;
+}
+/* 下一个图形 */
+.nextShape {
+    position: absolute;
+    width: 89px;
+    height: 87px;
+    border: 1px solid black;
+    top: 220px;
+    left: 800px;
+    background-color: #131114;
 }

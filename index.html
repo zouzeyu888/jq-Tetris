@@ -15,15 +15,20 @@
 
         $(function () {
             init();
+            nextShape();
             drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
-            $('#change').click(function () {
+            drawNextShape(shapes[currentShape.x][currentShape.y]);
+           /*  $('#change').click(function () {
+                eraseNextShape(shapes[nextshape][0]);
                 eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                 let x = (currentShape.x + 1) % shapes.length;
                 currentShape.x = x;
                 currentShape.y = 0;
                 currentCol = 0;
                 currentRow = 0;
+                nextshape = (x + 1) % shapes.length;
                 drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                drawNextShape(shapes[nextshape][0]);
             })
 
             //下移
@@ -35,12 +40,15 @@
                     drawShape(currentRow, currentCol, shape);
                 } else {
                     setBoard(currentRow, currentCol, shape);
+                    eraseNextShape(shapes[nextshape][0]);
                     let x = (currentShape.x + 1) % shapes.length;
                     currentShape.x = x;
                     currentShape.y = 0;
                     currentCol = 0;
                     currentRow = 0;
+                    nextshape = (x + 1) % shapes.length;
                     drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                    drawNextShape(shapes[nextshape][0]);
                 }
             })
 
@@ -70,11 +78,87 @@
                 let y = (currentShape.y + 1) % 4;
                 let nextShape = shapes[currentShape.x][y];
                 if (validate(currentRow, currentCol, nextShape)) {
+
                     eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                     currentShape.y = y;
                     drawShape(currentRow, currentCol, nextShape);
+
                 }
+            }) */
+
+            $(document).keydown(function (e) {
+                console.log(e.keyCode);
+                e = e.keyCode;
+
+                //向左
+                if (e == 37) {
+                    let shape = shapes[currentShape.x][currentShape.y];
+                    if (validate(currentRow, currentCol - 1, shape)) {
+                        eraseShape(currentRow, currentCol, shape);
+                        currentCol--;
+                        drawShape(currentRow, currentCol, shape);
+                    }
+                }
+
+
+
+
+                //向上旋转
+                if (e == 38) {
+                    let y = (currentShape.y + 1) % 4;
+                    let nextShape = shapes[currentShape.x][y];
+                    if (validate(currentRow, currentCol, nextShape)) {
+                        eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                        currentShape.y = y;
+                        drawShape(currentRow, currentCol, nextShape);
+                    }
+                }
+
+
+
+                //向右
+
+                if (e == 39) {
+                    let shape = shapes[currentShape.x][currentShape.y];
+                    if (validate(currentRow, currentCol + 1, shape)) {
+                        eraseShape(currentRow, currentCol, shape);
+                        currentCol++
+                        drawShape(currentRow, currentCol, shape);
+                    }
+                }
+
+
+
+                //向下走
+                if (e == 40) {
+                    let shape = shapes[currentShape.x][currentShape.y];
+                    if (validate(currentRow + 1, currentCol, shape)) {
+                        eraseShape(currentRow, currentCol, shape);
+                        currentRow++
+                        drawShape(currentRow, currentCol, shape);
+                    } else {
+                        setBoard(currentRow, currentCol, shape);
+                        eraseNextShape(shapes[nextshape][0]);
+                        let x = (currentShape.x + 1) % shapes.length;
+                        currentShape.x = x;
+                        currentShape.y = 0;
+                        currentCol = 0;
+                        currentRow = 0;
+                        nextshape = (x + 1) % shapes.length;
+                        drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
+                        drawNextShape(shapes[nextshape][0]);
+                    }
+                }
+
+
+
+
+
+
             })
+
+
+
 
 
 
@@ -84,15 +168,22 @@
 </head>
 
 <body>
-    <button id="up">上动</button>
-    <button id="down">下动</button>
-    <button id="right">右动</button>
-    <button id="left">左动</button>
-    <button id="change">变换</button>
-    <button id="rotate">旋转</button>
-    <button id="test">test</button>
+    <!-- 棋盘 -->
     <div class="board">
     </div>
+    <!-- 按钮 -->
+    <div class="btn">
+        <button id="up">上动</button>
+        <button id="down">下动</button>
+        <button id="left">左动</button>
+        <button id="right">右动</button>
+        <button id="change">变换</button>
+        <button id="rotate">旋转</button>
+    </div>
+    <!-- 下一个图形 -->
+    <div class="nextShape"></div>
+
+
 </body>
 
 </html>

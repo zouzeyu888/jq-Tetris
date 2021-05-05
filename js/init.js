@@ -6,7 +6,7 @@ const BOARD_ROW = 20; // 棋盘行数
 
 const BOARD_COLUMN = 10; // 棋盘列数
 
-const BOARD_COLOR = "orange";
+const BOARD_COLOR = "#131114";//模板颜色
 
 // 方块形状
 const shapes = [
@@ -34,6 +34,8 @@ let currentShape = {
     y: 0
 };
 
+let nextshape = 0;
+
 const board = [];
 
 // 初始化棋盘
@@ -48,8 +50,17 @@ function init() {
         $('.board').append(row);
         board.push(board_row);
     }
-    console.log(board);
 }
 
+//下一个图形
+function nextShape() {
+    for (let i = 0; i < 4; i++){
+        let row = $('<div class="rowDiv">');
+        for (let j = 0; j < 4; j++){
+            row.append('<span class="spanTetris"></span>');
+        }
+        $('.nextShape').append(row);
+    }
+}
 
 

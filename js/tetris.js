@@ -5,7 +5,7 @@ function drawSquare(row, col, color) {
 }
 
 // 画一个形状
-function drawShape(y, x, shape) {
+function drawShape(row, col, shape) {
     for (let i = 0; i < 4; i++) {
         let binaryStr = parseInt(shape[i], 16).toString(2);
         if (binaryStr.length < 4) {
@@ -13,14 +13,14 @@ function drawShape(y, x, shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                drawSquare(y + i, x + j, SQUARE_COLOR);
+                drawSquare(row + i, col + j, SQUARE_COLOR);
             }
         }
     }
 }
 
 //抹去一个图形
-function eraseShape(y, x, shape) {
+function eraseShape(row, col, shape) {
     for (let i = 0; i < 4; i++) {
         let binaryStr = parseInt(shape[i], 16).toString(2);
         if (binaryStr.length < 4) {
@@ -28,14 +28,14 @@ function eraseShape(y, x, shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                drawSquare(y + i, x + j, BOARD_COLOR);
+                drawSquare(row + i, col + j, BOARD_COLOR);
             }
         }
     }
 }
 
 // 边界验证
-function validate(y, x, shape) {
+function validate(row, col, shape) {
     for (let i = 0; i < 4; i++) {
         let binaryStr = parseInt(shape[i], 16).toString(2);
         if (binaryStr.length < 4) {
@@ -43,13 +43,13 @@ function validate(y, x, shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                if (y + i < 0 || y + i > 19) {
+                if (row + i < 0 || row + i > 19) {
                     return false;
                 }
-                if (x + j < 0 || x + j > 9) {
+                if (col + j < 0 || col + j > 9) {
                     return false;
                 }
-                if(board[y+i][x+j] == 1) {
+                if (board[row + i][col + j] == 1) {
                     return false;
                 }
             }
@@ -59,7 +59,7 @@ function validate(y, x, shape) {
 }
 
 // 设置棋盘
-function setBoard(y, x, shape) {
+function setBoard(row, col, shape) {
     for (let i = 0; i < 4; i++) {
         let binaryStr = parseInt(shape[i], 16).toString(2);
         if (binaryStr.length < 4) {
@@ -67,8 +67,45 @@ function setBoard(y, x, shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                board[y + i][x + j] = 1;
+                board[row + i][col + j] = 1;
             }
         }
     }
 }
+
+
+/* 画下一个图形的部分 start*/
+// 画一个方格
+function drawNextSquare(row, col, color) {
+    let rowDivs = $('.nextShape').children().eq(row).children().eq(col);
+    rowDivs.css('background', color);
+}
+// 画一个形状
+function drawNextShape(shape) {
+    for (let i = 0; i < 4; i++) {
+        let binaryStr = parseInt(shape[i], 16).toString(2);
+        if (binaryStr.length < 4) {
+            binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+        }
+        for (let j = 0; j < binaryStr.length; j++) {
+            if (binaryStr[j] == 1) {
+                drawNextSquare(i, j, SQUARE_COLOR);
+            }
+        }
+    }
+}
+//抹去一个图形
+function eraseNextShape(shape) {
+    for (let i = 0; i < 4; i++) {
+        let binaryStr = parseInt(shape[i], 16).toString(2);
+        if (binaryStr.length < 4) {
+            binaryStr = Array(4 - binaryStr.length).fill(0).join('') + binaryStr;
+        }
+        for (let j = 0; j < binaryStr.length; j++) {
+            if (binaryStr[j] == 1) {
+                drawNextSquare(i, j, BOARD_COLOR);
+            }
+        }
+    }
+}
+/* 画下一个图形的部分 end*/
