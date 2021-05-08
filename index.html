@@ -81,10 +81,32 @@
                         currentRow++
                         drawShape(currentRow, currentCol, shape);
                     } else {
-
+                        let sum = 0
                         setBoard(currentRow, currentCol, shape);
                         eraseNextShape(shapes[nextshape][0]);
-                        //let x = (currentShape.x + 1) % shapes.length;
+                        // 判断满行
+                        let fullRow = 0;
+                        for (let i = board.length - 1; i >= 0; i--) {
+                            let flag = true;
+                            for (let j = 0; j < board[i].length; j++) {
+                                if(board[i][j] == 0) {
+                                    // 只要有一个格子是空，说明该行不是满行，跳出该行的循环
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            // flag == true 说明改行是满行
+                            if(flag) {
+                                fullRow++;
+                                board.splice(i ,1);
+                                board.unshift(Array(10).fill(0));
+                                i++;
+                            }
+                        }
+                        if(fullRow > 0) {
+                            drawAll();
+                        }
+                        // 产生新方块
                         let x = parseInt(Math.random(0, 1) * 6);
                         currentShape.x = x;
                         currentShape.y = 0;
@@ -109,7 +131,7 @@
 
             })
             //自动走
-            //setInterval(autoDown, 800);
+            setInterval(autoDown, 800);
             setInterval(timer, 1000);
             //自动向下走向下走函数
             function autoDown() {
@@ -139,18 +161,18 @@
                 if (SEC == 59) {
                     SEC = 0;
                     MIN++
-                    
+
                 }
-                 if (SEC < 10) {
+                if (SEC < 10) {
                     $('#second').html('0' + SEC);
                 } else {
                     $('#second').html(SEC);
                 }
                 if (MIN < 9) {
-                        $('#minite').html('0' + MIN);
-                    } else {
-                        $('#minite').html(MIN);
-                    }
+                    $('#minite').html('0' + MIN);
+                } else {
+                    $('#minite').html(MIN);
+                }
 
 
             }
