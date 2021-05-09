@@ -124,7 +124,7 @@ function drawAll() {
 }
 
 function gameover() {
-    for (let i = 0; i < BOARD_ROW; i++) {
+   /*  for (let i = 0; i < BOARD_ROW; i++) {
         for (let j = 0; j < BOARD_COLUMN; j++) {
             drawSquare(i, j, BOARD_COLOR);
         }
@@ -142,7 +142,12 @@ function gameover() {
     currentShape = {
         x: 0,
         y: 0
-    };
+    }; */
     alert('game over')
+    location.reload();
 
+}
+
+function stop (){
+    
 }

@@ -77,3 +77,16 @@
     font-size: 15px;
     line-height: 20px;
 }
+
+/* 重开按钮 */
+.reNew {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.stop {
+    position: absolute;
+    bottom: 20px;
+    left: 80px;
+}

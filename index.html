@@ -126,7 +126,7 @@
                         currentShape.y = 0;
                         currentCol = 0;
                         currentRow = 0;
-                        nextshape = parseInt(Math.random(0, 1) * 7);
+                        nextshape = parseInt(Math.random(0, 1) * shapes.length);
                         drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                         drawNextShape(shapes[nextshape][0]);
                     }
@@ -134,8 +134,8 @@
                 }
             })
             //自动走
-           // setInterval(autoDown, 800);
-            //setInterval(timer, 1000);
+            setInterval(autoDown, 800);
+            setInterval(timer, 1000);
             //自动向下走向下走函数
             function autoDown() {
                 $('.showMark').html(marks * 100);
@@ -147,13 +147,44 @@
                 } else {
                     setBoard(currentRow, currentCol, shape);
                     eraseNextShape(shapes[nextshape][0]);
-
+                    // 判断满行
+                    let fullRow = 0;
+                        for (let i = board.length - 1; i >= 0; i--) {
+                            let flag = true;
+                            for (let j = 0; j < board[i].length; j++) {
+                                if (board[i][j] == 0) {
+                                    // 只要有一个格子是空，说明该行不是满行，跳出该行的循环
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            // flag == true 说明改行是满行
+                            if (flag) {
+                                fullRow++;
+                                board.splice(i, 1);
+                                board.unshift(Array(10).fill(0));
+                                i++;
+                                marks++;
+                                $('.showMark').html(marks * 100);
+                            }
+                            if (i == 0) {
+                                for (let k = 0; k < board[i].length; k++) {
+                                    if (board[i][k] == 1) {
+                                        gameover();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (fullRow > 0) {
+                            drawAll();
+                        }
                     let x = nextshape;
                     currentShape.x = x;
                     currentShape.y = 0;
                     currentCol = 0;
                     currentRow = 0;
-                    nextshape = parseInt(Math.random(0, 1) * 7);
+                    nextshape = parseInt(Math.random(0, 1) * shapes.length);
                     drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                     drawNextShape(shapes[nextshape][0]);
                 }
@@ -182,6 +213,12 @@
 
             }
 
+            $('.reNew').click(function(){
+                gameover();
+            })
+            $('.stop').click(function(){
+                removeEventListener('keydown');
+            })
 
 
 
@@ -202,8 +239,10 @@
         <p class="mark"><span class="showMark"></span>分</p>
         <!-- 记录时间 -->
         <p class="takeTime">用时<span id="minite"></span>分<span id="second"></span>秒</p>
-
+        <button class="reNew">重开</button>
+        <button class="stop">停止</button>
     </div>
+
 
 
 
