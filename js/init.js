@@ -12,6 +12,8 @@ let MIN = 0; //初始化分
 
 let SEC = 0; //初始化秒
 
+let marks = 0; //初始分数
+
 // 方块形状
 const shapes = [
     /* O I L Z S J T */
@@ -38,7 +40,7 @@ let currentShape = {
     y: 0
 };
 
-let nextshape = 0;
+let nextshape = parseInt(Math.random(0, 1) * 7);
 
 const board = [];
 

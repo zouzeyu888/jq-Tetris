@@ -52,6 +52,7 @@ function validate(row, col, shape) {
                 if (board[row + i][col + j] == 1) {
                     return false;
                 }
+
             }
         }
     }
@@ -111,13 +112,37 @@ function eraseNextShape(shape) {
 /* 画下一个图形的部分 end*/
 
 function drawAll() {
-    for(let i = 0; i < BOARD_ROW; i++) {
-        for(let j = 0; j < BOARD_COLUMN; j++) {
-            if(board[i][j] == 0) {
+    for (let i = 0; i < BOARD_ROW; i++) {
+        for (let j = 0; j < BOARD_COLUMN; j++) {
+            if (board[i][j] == 0) {
                 drawSquare(i, j, BOARD_COLOR);
             } else {
                 drawSquare(i, j, SQUARE_COLOR);
             }
         }
     }
+}
+
+function gameover() {
+    for (let i = 0; i < BOARD_ROW; i++) {
+        for (let j = 0; j < BOARD_COLUMN; j++) {
+            drawSquare(i, j, BOARD_COLOR);
+        }
+    }
+    for (let i = 0; i < BOARD_ROW; i++) {
+        for (let j = 0; j < BOARD_COLUMN; j++) {
+            board[i][j] = 0;
+        }
+    }
+    MIN = 0;
+    SEC = 0;
+    marks = 0;
+    currentRow = 0; 
+    currentCol = 0;
+    currentShape = {
+        x: 0,
+        y: 0
+    };
+    alert('game over')
+
 }

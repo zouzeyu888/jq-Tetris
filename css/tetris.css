@@ -1,16 +1,22 @@
 /* 10 * 20  width: 20px height: 20px */
+
 /* 棋盘 */
+
 .board {
     width: 218px;
     height: 409px;
     background-color: #131114;
     margin: 100px auto;
 }
+
 /* 一行高度 */
+
 .rowDiv {
     height: 20px;
 }
+
 /* 每个格子 */
+
 .spanTetris {
     width: 20px;
     height: 20px;
@@ -19,16 +25,18 @@
 }
 
 /* show框 */
+
 .show {
     position: relative;
     width: 150px;
     height: 250px;
     top: -500px;
     left: 770px;
-   /*  border: 1px solid black; */
+    border: 1px solid black;
 }
 
 /* hint：下一个图形 */
+
 .hint {
     position: absolute;
     left: 15px;
@@ -36,8 +44,8 @@
     font-weight: 700;
 }
 
-
 /* 下一个图形 */
+
 .nextShape {
     position: absolute;
     width: 89px;
@@ -48,11 +56,21 @@
     background-color: #131114;
 }
 
+.mark {
+    position: absolute;
+    top: 130px;
+    left: 20px;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    border: 1px solid black;
+}
+
 /* takeTime记录用时 */
 
 .takeTime {
     position: absolute;
-    top: 150px;
+    top: 160px;
     left: 20px;
     height: 20px;
     width: 100px;

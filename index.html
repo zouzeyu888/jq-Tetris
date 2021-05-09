@@ -17,7 +17,7 @@
             init();
             nextShape();
             drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
-            drawNextShape(shapes[currentShape.x][currentShape.y]);
+            drawNextShape(shapes[nextshape][currentShape.y]);
             /*  $('#change').click(function () {
                  eraseNextShape(shapes[nextshape][0]);
                  eraseShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
@@ -81,7 +81,7 @@
                         currentRow++
                         drawShape(currentRow, currentCol, shape);
                     } else {
-                        let sum = 0
+
                         setBoard(currentRow, currentCol, shape);
                         eraseNextShape(shapes[nextshape][0]);
                         // 判断满行
@@ -89,52 +89,56 @@
                         for (let i = board.length - 1; i >= 0; i--) {
                             let flag = true;
                             for (let j = 0; j < board[i].length; j++) {
-                                if(board[i][j] == 0) {
+                                if (board[i][j] == 0) {
                                     // 只要有一个格子是空，说明该行不是满行，跳出该行的循环
                                     flag = false;
                                     break;
                                 }
                             }
                             // flag == true 说明改行是满行
-                            if(flag) {
+                            if (flag) {
                                 fullRow++;
-                                board.splice(i ,1);
+                                board.splice(i, 1);
                                 board.unshift(Array(10).fill(0));
                                 i++;
+                                marks++;
+                                $('.showMark').html(marks * 100);
+                            }
+                            if (i == 0) {
+                                for (let k = 0; k < board[i].length; k++) {
+                                    if (board[i][k] == 1) {
+                                        gameover();
+                                        break;
+                                    }
+                                }
                             }
                         }
-                        if(fullRow > 0) {
+                        if (fullRow > 0) {
                             drawAll();
                         }
+
+
+
                         // 产生新方块
-                        let x = parseInt(Math.random(0, 1) * 6);
+
+                        let x = nextshape;
                         currentShape.x = x;
                         currentShape.y = 0;
                         currentCol = 0;
                         currentRow = 0;
-                        nextshape = (x + 1) % shapes.length;
+                        nextshape = parseInt(Math.random(0, 1) * 7);
                         drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                         drawNextShape(shapes[nextshape][0]);
                     }
 
                 }
-
-
-
-
-
-
-
-
-
-
-
             })
             //自动走
-            setInterval(autoDown, 800);
-            setInterval(timer, 1000);
+           // setInterval(autoDown, 800);
+            //setInterval(timer, 1000);
             //自动向下走向下走函数
             function autoDown() {
+                $('.showMark').html(marks * 100);
                 let shape = shapes[currentShape.x][currentShape.y];
                 if (validate(currentRow + 1, currentCol, shape)) {
                     eraseShape(currentRow, currentCol, shape);
@@ -143,12 +147,13 @@
                 } else {
                     setBoard(currentRow, currentCol, shape);
                     eraseNextShape(shapes[nextshape][0]);
-                    let x = (currentShape.x + 1) % shapes.length;
+
+                    let x = nextshape;
                     currentShape.x = x;
                     currentShape.y = 0;
                     currentCol = 0;
                     currentRow = 0;
-                    nextshape = (x + 1) % shapes.length;
+                    nextshape = parseInt(Math.random(0, 1) * 7);
                     drawShape(currentRow, currentCol, shapes[currentShape.x][currentShape.y]);
                     drawNextShape(shapes[nextshape][0]);
                 }
@@ -193,6 +198,8 @@
         <p class="hint">下一个图形</p>
         <!-- 下一个图形 -->
         <div class="nextShape"></div>
+        <!-- 积分器 -->
+        <p class="mark"><span class="showMark"></span>分</p>
         <!-- 记录时间 -->
         <p class="takeTime">用时<span id="minite"></span>分<span id="second"></span>秒</p>
 
