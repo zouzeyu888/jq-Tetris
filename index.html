@@ -89,7 +89,7 @@
                         for (let i = board.length - 1; i >= 0; i--) {
                             let flag = true;
                             for (let j = 0; j < board[i].length; j++) {
-                                if (board[i][j] == 0) {
+                                if (board[i][j].status == 0) {
                                     // 只要有一个格子是空，说明该行不是满行，跳出该行的循环
                                     flag = false;
                                     break;
@@ -99,14 +99,21 @@
                             if (flag) {
                                 fullRow++;
                                 board.splice(i, 1);
-                                board.unshift(Array(10).fill(0));
+                                let row = [];
+                                for(let i = 0; i < 10; i++) {
+                                    row.push({
+                                        status: 0,
+                                        color: BOARD_COLOR
+                                    })
+                                }
+                                board.unshift(row);
                                 i++;
                                 marks++;
                                 $('.showMark').html(marks * 100);
                             }
                             if (i == 0) {
                                 for (let k = 0; k < board[i].length; k++) {
-                                    if (board[i][k] == 1) {
+                                    if (board[i][k].status == 1) {
                                         gameover();
                                         break;
                                     }
@@ -152,7 +159,7 @@
                         for (let i = board.length - 1; i >= 0; i--) {
                             let flag = true;
                             for (let j = 0; j < board[i].length; j++) {
-                                if (board[i][j] == 0) {
+                                if (board[i][j].status == 0) {
                                     // 只要有一个格子是空，说明该行不是满行，跳出该行的循环
                                     flag = false;
                                     break;
@@ -169,7 +176,7 @@
                             }
                             if (i == 0) {
                                 for (let k = 0; k < board[i].length; k++) {
-                                    if (board[i][k] == 1) {
+                                    if (board[i][k].status == 1) {
                                         gameover();
                                         break;
                                     }

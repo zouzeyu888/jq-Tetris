@@ -13,7 +13,7 @@ function drawShape(row, col, shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                drawSquare(row + i, col + j, SQUARE_COLOR);
+                drawSquare(row + i, col + j, SQUARE_COLOR[currentShape.x]);
             }
         }
     }
@@ -32,6 +32,7 @@ function eraseShape(row, col, shape) {
             }
         }
     }
+    
 }
 
 // 边界验证
@@ -49,7 +50,7 @@ function validate(row, col, shape) {
                 if (col + j < 0 || col + j > 9) {
                     return false;
                 }
-                if (board[row + i][col + j] == 1) {
+                if (board[row + i][col + j].status == 1) {
                     return false;
                 }
 
@@ -68,7 +69,8 @@ function setBoard(row, col, shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                board[row + i][col + j] = 1;
+                board[row + i][col + j].status = 1;
+                board[row + i][col + j].color = SQUARE_COLOR[currentShape.x];
             }
         }
     }
@@ -90,7 +92,7 @@ function drawNextShape(shape) {
         }
         for (let j = 0; j < binaryStr.length; j++) {
             if (binaryStr[j] == 1) {
-                drawNextSquare(i, j, SQUARE_COLOR);
+                drawNextSquare(i, j, SQUARE_COLOR[nextshape]);
             }
         }
     }
@@ -114,35 +116,18 @@ function eraseNextShape(shape) {
 function drawAll() {
     for (let i = 0; i < BOARD_ROW; i++) {
         for (let j = 0; j < BOARD_COLUMN; j++) {
-            if (board[i][j] == 0) {
+            if (board[i][j].status == 0) {
                 drawSquare(i, j, BOARD_COLOR);
             } else {
-                drawSquare(i, j, SQUARE_COLOR);
+                drawSquare(i, j, board[i][j].color);
             }
         }
     }
+    console.log(board);
 }
 
 function gameover() {
-   /*  for (let i = 0; i < BOARD_ROW; i++) {
-        for (let j = 0; j < BOARD_COLUMN; j++) {
-            drawSquare(i, j, BOARD_COLOR);
-        }
-    }
-    for (let i = 0; i < BOARD_ROW; i++) {
-        for (let j = 0; j < BOARD_COLUMN; j++) {
-            board[i][j] = 0;
-        }
-    }
-    MIN = 0;
-    SEC = 0;
-    marks = 0;
-    currentRow = 0; 
-    currentCol = 0;
-    currentShape = {
-        x: 0,
-        y: 0
-    }; */
+   
     alert('game over')
     location.reload();
 

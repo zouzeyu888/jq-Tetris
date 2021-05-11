@@ -1,6 +1,6 @@
 const SQUARE_WIDTH = 20; // 方格宽度
 
-const SQUARE_COLOR = "red"; // 方格颜色
+const SQUARE_COLOR = ["red", "yellow", "blue", "green", "purple", "orange" ,"#fff"]; // 方格颜色
 
 const BOARD_ROW = 20; // 棋盘行数
 
@@ -51,7 +51,10 @@ function init() {
         let board_row = [];
         for (let j = 0; j < BOARD_COLUMN; j++) {
             row.append('<span class="spanTetris"></span>');
-            board_row.push(0);
+            board_row.push({
+                status: 0,
+                color: BOARD_COLOR
+            });
         }
         $('.board').append(row);
         board.push(board_row);
@@ -60,9 +63,9 @@ function init() {
 
 //下一个图形
 function nextShape() {
-    for (let i = 0; i < 4; i++){
+    for (let i = 0; i < 4; i++) {
         let row = $('<div class="rowDiv">');
-        for (let j = 0; j < 4; j++){
+        for (let j = 0; j < 4; j++) {
             row.append('<span class="spanTetris"></span>');
         }
         $('.nextShape').append(row);
